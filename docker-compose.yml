@@ -1,6 +1,54 @@
 version: '3'
 
 services:
+  client:
+    build: 
+      dockerfile: Dockerfile.prod
+      context: ./client
+    container_name: portfolio-client
+    restart: unless-stopped
+    command: serve -s build -l 3000
+    networks:
+      - uportfolio-docker-network
+
   server:
     build: ./server
-  
+    container_name: portfolio-server
+    command: npm run start
+    restart: unless-stopped
+    environment:
+      - PORT=3001
+      - MONGO_URL=mongodb://server_db:27017/server
+    depends_on:
+      - server_db
+    networks:
+      - uportfolio-docker-network
+    
+  server_db:
+    image: mongo:latest
+    container_name: portfolio-server-db
+    volumes:
+      - mongodb_server:/data/db
+    networks:
+      - uportfolio-docker-network
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: portfolio-docker-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf.prod:/etc/nginx/conf.d/nginx.conf
+    depends_on:
+      - client
+      - server
+    networks:
+      - uportfolio-docker-network
+
+volumes:
+  mongodb_server:
+
+
+networks:
+  uportfolio-docker-network:
+    driver: bridge
