@@ -33,11 +33,7 @@ model Anketa {
   User      User[]
 }
 
-model ImageModel {
-  id     BigInt @id @default(autoincrement())
-  link   String
-  
-}
+
 
 model  Device{
   id          BigInt       @id @default(autoincrement())
@@ -46,19 +42,8 @@ model  Device{
   description String       @db.VarChar(1000)
   created_at  DateTime
   update_at   DateTime?
-  ImageModel  ImageModel[]
-  Comment     Comment[]
 }
 
-model Comment {
-  id      BigInt @id @default(autoincrement())
-  message String
-  userId  BigInt
-  newsId  BigInt
-  created_at  DateTime
-  update_at   DateTime?
-  User    User   @relation(fields: [userId], references: [id], onDelete: NoAction)
-  Device    Device   @relation(fields: [newsId], references: [id], onDelete: NoAction)
-}
+
 
 

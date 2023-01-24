@@ -6,7 +6,7 @@ const methods = {
 	login: null, 
     uploadAva: null,
 };
-const prisma = require("../../prisma");
+const prisma = require("../../../prisma");
 
 methods.registration = async function ({email, firstName, lastName, password,  role = "USER"}) {
 	const user = await prisma.user.findFirst({
