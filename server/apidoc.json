@@ -1,0 +1,15 @@
+{
+    "name": "uportfolio.one",
+    "version": "1.0.2",
+    "title": "uportfolio.one API",
+    "url": "/api",
+    "sampleUrl": "/api",
+    "useHostUrlAsSampleUrl": true,
+    "template": {
+        "withCompare": true,
+        "withGenerator": true
+    },
+    "order": [
+        
+    ]
+}

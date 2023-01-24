@@ -18,17 +18,20 @@ services:
     restart: unless-stopped
     environment:
       - PORT=3001
-      - MONGO_URL=mongodb://server_db:27017/server
+      - DATABASE_URL=postgresql://server_db:5432/server
     depends_on:
       - server_db
     networks:
       - uportfolio-docker-network
     
   server_db:
-    image: mongo:latest
+    image: postgres:latest 
     container_name: portfolio-server-db
     volumes:
-      - mongodb_server:/data/db
+      - postgres_server:/data/db
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
     networks:
       - uportfolio-docker-network
 
@@ -46,7 +49,7 @@ services:
       - uportfolio-docker-network
 
 volumes:
-  mongodb_server:
+  postgres_server:
 
 
 networks:
